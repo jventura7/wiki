@@ -1,4 +1,13 @@
+'use client';
+import Link from 'next/link';
+
 export default function Home() {
+  const handleRandom = async () => {
+    const response = await fetch('http://127.0.0.1:8000/random');
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center">
       <div className="p-10 text-6xl font-bold">wiki.</div>
@@ -12,6 +21,14 @@ export default function Home() {
           name="query"
           type="text"
         ></input>
+      </div>
+      <div className="mt-20 flex w-full justify-center space-x-10">
+        <Link className="font-medium" href="/create">
+          Create Page
+        </Link>
+        <Link onClick={handleRandom} className="font-medium" href="/">
+          Random Page
+        </Link>
       </div>
     </main>
   );
