@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .util import list_entries
 
 from . import util
@@ -18,3 +19,10 @@ def random(request):
 def pages(request):
     all_pages = list_entries()
     return JsonResponse(all_pages, safe=False)
+
+
+@csrf_exempt
+def page(request):
+    if request.method == 'POST':
+        print(request.body)
+        return HttpResponse(status=204)
