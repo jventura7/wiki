@@ -8,10 +8,28 @@ interface pageContentType {
   setPageContent: Dispatch<SetStateAction<string>>;
 }
 
-export default function Page({ params }: { params: { page: string } }) {
+export default function PageContent({ params }: { params: { page: string } }) {
   const [edit, setEdit] = useState<boolean>(false);
-
   const { pageContent, setPageContent }: pageContentType = usePage(params.page);
+
+  const handlePublish = async () => {
+    const pageTitle = params.page;
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/page`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageTitle,
+          pageContent,
+        }),
+      });
+      setEdit(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -22,7 +40,9 @@ export default function Page({ params }: { params: { page: string } }) {
             className="h-96 w-full max-w-md rounded-lg border border-black p-2 focus:outline-none"
             value={pageContent}
           ></textarea>
-          <button className="button">Publish</button>
+          <button onClick={handlePublish} className="button">
+            Publish
+          </button>
         </div>
       ) : (
         <div className="flex flex-col items-center px-20 md:items-start">

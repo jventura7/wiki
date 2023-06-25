@@ -1,7 +1,8 @@
+import json
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .util import list_entries, get_entry
+from .util import list_entries, get_entry, save_entry
 
 from . import util
 
@@ -23,9 +24,16 @@ def pages(request):
 
 @csrf_exempt
 def page(request, id):
+    entry = get_entry(id)
+    return JsonResponse({'entry': entry})
+
+
+@csrf_exempt
+def pagePOST(request):
     if request.method == 'POST':
-        print(request.body)
-        return HttpResponse(status=204)
-    else:
-        entry = get_entry(id)
-        return JsonResponse({'entry': entry})
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        title = body['pageTitle']
+        content = body['pageContent']
+        save_entry(title, content)
+        return HttpResponse({'success': 204})
