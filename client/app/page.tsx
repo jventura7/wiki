@@ -1,16 +1,27 @@
 'use client';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [pages, setPages] = useState<string[]>([]);
+
   const handleRandom = async () => {
-    const response = await fetch('http://127.0.0.1:8000/random');
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/random`);
     const data = await response.json();
     console.log(data);
   };
 
+  useEffect(() => {
+    const getPages = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pages`);
+      const pages = await response.json();
+      setPages(pages);
+    };
+    getPages().catch((e) => console.log(e));
+  }, []);
+
   return (
-    <main className="flex min-h-screen flex-col items-center">
-      <div className="p-10 text-6xl font-bold">wiki.</div>
+    <>
       <div>
         <label className="mr-2" htmlFor="query">
           Search:
@@ -30,6 +41,22 @@ export default function Home() {
           Random Page
         </Link>
       </div>
-    </main>
+      <div className="mt-10 md:w-full md:max-w-3xl">
+        <h1 className="text-center text-xl font-medium">All Pages</h1>
+        <ul className="flex w-full flex-col items-center justify-between space-y-6 p-10 md:flex-row md:space-y-0 md:p-20">
+          {pages.map((page, index) => (
+            <div className="group" key={index}>
+              <Link
+                href="/"
+                className="inline-block text-xl transition duration-300 hover:-translate-y-1"
+              >
+                {page}
+              </Link>
+              <div className="w-full border-b-2 border-black group-hover:border-orange-400"></div>
+            </div>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
