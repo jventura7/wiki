@@ -1,24 +1,15 @@
 'use client';
+import usePages from '@/hooks/usePages';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [pages, setPages] = useState<string[]>([]);
+  const { pages } = usePages();
 
   const handleRandom = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/random`);
     const data = await response.json();
     console.log(data);
   };
-
-  useEffect(() => {
-    const getPages = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pages`);
-      const pages = await response.json();
-      setPages(pages);
-    };
-    getPages().catch((e) => console.log(e));
-  }, []);
 
   return (
     <>
@@ -47,7 +38,7 @@ export default function Home() {
           {pages.map((page, index) => (
             <div className="group" key={index}>
               <Link
-                href="/"
+                href={`/wiki/${page}`}
                 className="inline-block text-xl transition duration-300 hover:-translate-y-1"
               >
                 {page}

@@ -43,10 +43,7 @@ export default function Create() {
         placeholder="Enter page..."
         className="h-96 w-full max-w-md rounded-lg border border-black p-2 focus:outline-none md:max-w-3xl"
       ></textarea>
-      <button
-        onClick={handleSubmit}
-        className="rounded-xl bg-black px-4 py-2 text-white transition duration-150 hover:bg-opacity-50"
-      >
+      <button onClick={handleSubmit} className="button">
         Publish
       </button>
     </div>
