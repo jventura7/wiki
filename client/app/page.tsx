@@ -1,14 +1,15 @@
 'use client';
 import usePages from '@/hooks/usePages';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function Home() {
   const { pages } = usePages();
+  const { push } = useRouter();
 
-  const handleRandom = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/random`);
-    const data = await response.json();
-    console.log(data);
+  const handleRandom = () => {
+    const randomPage = pages[Math.floor(Math.random() * pages.length)];
+    push(`/wiki/${randomPage}`);
   };
 
   return (
@@ -28,9 +29,9 @@ export default function Home() {
         <Link className="font-medium" href="/create">
           Create Page
         </Link>
-        <Link onClick={handleRandom} className="font-medium" href="/">
+        <button onClick={handleRandom} className="font-medium">
           Random Page
-        </Link>
+        </button>
       </div>
       <div className="mt-10 md:w-full md:max-w-3xl">
         <h1 className="text-center text-xl font-medium">All Pages</h1>

@@ -45,7 +45,7 @@ export default function PageContent({ params }: { params: { page: string } }) {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col items-center px-20 md:items-start">
+        <div className="flex max-w-3xl flex-col items-center px-20 md:items-start">
           <ReactMarkdown className="markdown">{pageContent}</ReactMarkdown>
           <button onClick={() => setEdit(true)} className="button">
             Edit
