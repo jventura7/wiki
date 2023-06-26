@@ -26,20 +26,20 @@ def pages(request):
 
 
 @csrf_exempt
-def page(request, id):
-    entry = get_entry(id)
-    return JsonResponse({'entry': entry})
-
-
-@csrf_exempt
-def pagePOST(request):
+def page(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         title = body['pageTitle']
         content = body['pageContent']
         save_entry(title, content)
-        return HttpResponse({'success': 204})
+        return HttpResponse({'success': True})
+    elif request.method == 'GET':
+        id = request.GET.get('id')
+        entry = get_entry(id)
+        return JsonResponse({'entry': entry})
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
 
 
 def search(request):

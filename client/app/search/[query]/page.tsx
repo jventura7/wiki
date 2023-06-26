@@ -19,7 +19,6 @@ export default function Search({ params }: { params: { query: string } }) {
             })
         );
         const data = await response.json();
-        console.log(data);
         if (data['entries'].length > 0) {
           setPages(data['entries']);
         }

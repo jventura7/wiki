@@ -7,7 +7,10 @@ export default function usePage(entry: string) {
   useEffect(() => {
     const getPageContent = async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/page/${entry}`
+        `${process.env.NEXT_PUBLIC_API_URL}/page?` +
+          new URLSearchParams({
+            id: entry,
+          })
       );
       const page = await response.json();
       setPageContent(page['entry']);
