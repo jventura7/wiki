@@ -31,6 +31,12 @@ export default function PageContent({ params }: { params: { page: string } }) {
     }
   };
 
+  const clickHandler = (e) => {
+    if (e.detail == 2) {
+      setEdit(true);
+    }
+  };
+
   return (
     <>
       {edit ? (
@@ -46,7 +52,9 @@ export default function PageContent({ params }: { params: { page: string } }) {
         </div>
       ) : (
         <div className="flex max-w-3xl flex-col items-center px-20 md:items-start">
-          <ReactMarkdown className="markdown">{pageContent}</ReactMarkdown>
+          <div onClick={clickHandler}>
+            <ReactMarkdown className="markdown">{pageContent}</ReactMarkdown>
+          </div>
           <button onClick={() => setEdit(true)} className="button">
             Edit
           </button>
