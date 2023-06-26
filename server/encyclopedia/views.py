@@ -13,10 +13,6 @@ def index(request):
     })
 
 
-def random(request):
-    return JsonResponse('hello', safe=False)
-
-
 def pages(request):
     all_pages = list_entries()
     return JsonResponse({'pages': all_pages})
@@ -37,3 +33,17 @@ def pagePOST(request):
         content = body['pageContent']
         save_entry(title, content)
         return HttpResponse({'success': 204})
+
+
+def search(request):
+    query = request.GET.get('query')
+    entry = get_entry(query)
+    if entry:
+        return JsonResponse({'found': True, 'entry': entry})
+    else:
+        all_entries = list_entries()
+        matching_entries = []
+        for entry in all_entries:
+            if query.lower() in entry.lower():
+                matching_entries.append(entry)
+        return JsonResponse({'found': False, 'entries': matching_entries})

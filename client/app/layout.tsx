@@ -1,6 +1,9 @@
+import SearchBar from '@/components/SearchBar';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import NavBar from '@/components/NavBar';
+import usePages from '@/hooks/usePages';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,9 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col items-center">
-        <div className="p-10 text-6xl font-bold">
-          <Link href="/">wiki.</Link>
-        </div>
+        <NavBar />
         {children}
       </body>
     </html>
