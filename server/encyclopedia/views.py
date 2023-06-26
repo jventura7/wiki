@@ -1,4 +1,5 @@
 import json
+from random import choice
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +12,12 @@ def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
+
+
+def random(request):
+    all_pages = list_entries()
+    random_page = choice(all_pages)
+    return JsonResponse({'random_page': random_page})
 
 
 def pages(request):

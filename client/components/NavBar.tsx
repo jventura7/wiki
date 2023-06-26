@@ -7,11 +7,16 @@ import { useRouter } from 'next/navigation';
 
 export default function NavBar() {
   const { push } = useRouter();
-  const { pages } = usePages();
 
-  const handleRandom = () => {
-    const randomPage = pages[Math.floor(Math.random() * pages.length)];
-    push(`/wiki/${randomPage}`);
+  const handleRandom = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/random`);
+      const data = await response.json();
+      const randomPage = data['random_page'];
+      push(`/wiki/${randomPage}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

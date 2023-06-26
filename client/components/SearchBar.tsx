@@ -19,12 +19,14 @@ export default function SearchBar() {
       const data = await response.json();
       if (data.found) {
         push(`/wiki/${search}`);
+      } else {
+        push(`/search/${search}`);
       }
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <form
       className="pt-6 md:absolute md:right-5 md:pt-0"

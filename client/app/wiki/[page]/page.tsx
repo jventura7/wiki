@@ -1,4 +1,5 @@
 'use client';
+
 import usePage from '@/hooks/usePage';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
@@ -31,7 +32,7 @@ export default function PageContent({ params }: { params: { page: string } }) {
     }
   };
 
-  const clickHandler = (e) => {
+  const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.detail == 2) {
       setEdit(true);
     }
@@ -52,7 +53,7 @@ export default function PageContent({ params }: { params: { page: string } }) {
         </div>
       ) : (
         <div className="flex max-w-3xl flex-col items-center px-20 md:items-start">
-          <div onClick={clickHandler}>
+          <div onClick={(e) => clickHandler(e)}>
             <ReactMarkdown className="markdown">{pageContent}</ReactMarkdown>
           </div>
           <button onClick={() => setEdit(true)} className="button">

@@ -56,7 +56,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'wiki.urls'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3003",
+    "http://localhost:3000",
 ]
 
 TEMPLATES = [

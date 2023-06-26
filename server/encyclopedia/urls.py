@@ -7,5 +7,6 @@ urlpatterns = [
     path("pages", views.pages, name="pages"),
     path("page/<id>/", views.page, name="page"),
     path("page", views.pagePOST, name="page publish"),
-    path("search", views.search, name="search")
+    path("search", views.search, name="search"),
+    path("random", views.random, name="random")
 ]
